@@ -1,0 +1,58 @@
+```{r SOURCE_FILES, echo=FALSE, message=FALSE}
+### Load Data Sets
+source('~/ANALYTICS PROJECTS/CourseraCapstone/CasinoAttributes.R')
+source('~/ANALYTICS PROJECTS/CourseraCapstone/load_dfs.R')
+source('~/ANALYTICS PROJECTS/CourseraCapstone/CasinoRF.R')
+
+require(knitr)
+```
+
+```{r LOAD_DATA, echo=FALSE, cache=FALSE, message=FALSE}
+load_dfs()
+```
+
+What attributes are important to Las Vegas casino customers?
+========================================================
+author: Mark Stephens
+date: Johns Hopkins Data Science Certification Capstone
+class: illustration
+
+##### This project develops predictive & classification models 
+##### to answer this question
+
+Food, Drinks, Ambiance?
+========================================================
+#### When you think about what customers want from a casino what's on that list?
+
+#### Here are 10 attributes that correlate with Yelp reviews...
+```{r ATTR_TOP10, echo=FALSE, message=FALSE}
+kable(att_summary())
+```
+So What?
+========================================================
+What if casino managers have the ability to predict 
+customer ratings based upon product & service attributes?
+<div align = "center">
+<img src = "CasinoAttributeTree.png" width=800 height=400>
+</div>
+This classification tree reveals that across the market food is an important attribute
+We can predict casino Yelp star rating based upon attributes found in reviews
+========================================================
+Prediction model test returns model accuracy of `r round(rfcm$overall[1],2)*100`%. 
+`r kable(rfcm$table)`
+.... what can managers learn from customer reviews?
+Managers can use a decision tree...
+========================================================
+to decide where to focus service & improvements
+<div align = "center">
+<img src = "TuscanyCasinoTree.png" width=800 height=400>
+</div>
+## looks like breakfast is important at Tuscany 
+Yelp attribute insights help casino managers
+========================================================
+1. The predictive model tells us customers focus on attributes
+when reviewing and rating casinos
+2. Using this analysis shows which attributes customers talk about
+3. Using this analysis a casino manager can decide which attributes
+may help improve customer ratings 
+4. If customer ratings improve, will business results improve too?

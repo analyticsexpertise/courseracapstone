@@ -13,12 +13,14 @@ see_predict_tree <- function(){
   
   df <- bigcasinodf
   
-  pred_control <- rpart.control(xval=10, minbucket=25, minsplit=50, cp=0.0001)
+  pred_control <- rpart.control(xval=10, minbucket=30, minsplit=50, cp=0.0001)
   
   predTree <<- rpart(name_col ~ stars+max_cor,
                      data=df, na.action = na.pass,control=pred_control)
   
-  rpart.plot(predTree, type=4, faclen = 0, cex=0.7)
+  rpart.plot(predTree, type=4, faclen = 0, cex=0.6,main="Casino attribute correlation tree")
+  
+  save(predTree,file="predTree.RData")
   
 }
 
@@ -40,6 +42,25 @@ casino_tree <- function(list_num=1){
   predTree <<- rpart(name_col ~ max_stars+max_cor+mean_stars+mean_cor+min_stars+min_cor,
                      data=df, na.action = na.pass,control=pred_control)
   
-  rpart.plot(predTree, type=4, faclen = 0, cex=0.7)
+  rpart.plot(predTree, type=4, faclen = 0, cex=0.7, main=casino_list[list_num])
+  
+}
+
+
+casino_tree_name <- function(casino="Tuscany Hotel & Casino"){
+  
+  if(exists("bigcasinodf",1)==FALSE)
+  {
+    load("bigcasinodf.RData",.GlobalEnv)
+  }
+  
+  df <- bigcasinodf[bigcasinodf$name==casino, ]
+  
+  pred_control <- rpart.control(xval=10, minbucket=2, minsplit=1, cp=0.0001)
+  
+  predTree <<- rpart(name_col ~ max_stars+max_cor+mean_stars+mean_cor+min_stars+min_cor,
+                     data=df, na.action = na.pass,control=pred_control)
+  
+  rpart.plot(predTree, type=4, faclen = 0, cex=0.7, main=casino)
   
 }

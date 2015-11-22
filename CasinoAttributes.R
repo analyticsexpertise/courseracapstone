@@ -11,6 +11,7 @@ require(gdata)
 require(rpart)
 require(rpart.plot)
 require(dplyr)
+require(knitr)
 
 
 
@@ -427,5 +428,30 @@ make_assocsdf <- function(){
   
 }
 
-
+attribute_words <- function(){
   
+  att_words <<- as.data.frame(rbind(ambiance=v_ambiance,
+                                   good_for=v_good4,
+                                   music = v_music,
+                                   parking = v_parking,
+                                   payment = v_payment,deparse.level = 0))
+  
+}
+
+association_words <- function(){
+  
+ unique(fitdf$name_col)
+  
+  
+}
+
+
+att_summary <- function(){
+  
+  df <- summarize(group_by(bigcasinodf,name_col),stars = mean(mean_stars),reviews = mean(reviews), corr = mean(mean_cor))
+  
+  df <- df[order(-df$corr), ]
+  
+  df[1:10, ]
+  
+}

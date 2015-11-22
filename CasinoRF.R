@@ -1,5 +1,5 @@
 
-
+require(caret)
 require(randomForest)
 
 ### Random Forest Classification 
@@ -37,7 +37,11 @@ test_rf <-function(){
   
   rfPred <<- predict(pred.rf,newdata=df_test)
   
-  table(rfPred,df_test$stars)
+  rftest <<- table(rfPred,df_test$stars)
+  
+  rfcm <<- confusionMatrix(rftest)
+  
+  save(rfcm,file="rfcm.RData")
   
 }
 
@@ -48,7 +52,6 @@ see_rf_importance <-function(){
   varImpPlot(pred.rf,type=2,main = "Variable Importance - GINI",cex=0.7)
   
   varImpPlot(pred.rf,type=1,main = "Variable Importance - Accuracy",cex=0.7)
-  
   
 }
 
